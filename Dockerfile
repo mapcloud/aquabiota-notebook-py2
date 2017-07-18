@@ -19,7 +19,7 @@ RUN ["/bin/bash", "-c", "source activate ipykernel_py2 && python -m ipykernel in
 # Preparing Nansat install
 # https://github.com/nansencenter/nansat
 ENV GDAL_DATA $HOME/conda/share/gdal/
-RUN GEOS_DIR $HOME/conda/
+ENV GEOS_DIR $HOME/conda/
 
 RUN ["/bin/bash", "-c", "source activate ipykernel_py2 && conda install -q --yes -c conda-forge qt numpy scipy matplotlib nose pillow basemap netcdf4 gdal"]
 RUN ["/bin/bash", "-c", "source activate ipykernel_py2 && pip install https://github.com/nansencenter/nansat/archive/master.tar.gz"]
