@@ -14,18 +14,19 @@ ARG DEBIAN_FRONTEND=noninteractive
 USER $NB_USER
 # NOTE. this will install the full anaconda but for python 2. Only for develop.
 # Packages for production can be added in a yaml env file.
-RUN conda create -y -n ipykernel_py2 python=2 ipykernel anaconda
+RUN conda create -y -n ipykernel_py2 python=2 ipykernel
 
 RUN ["/bin/bash", "-c", "source activate ipykernel_py2 && python -m ipykernel install --user" ]
+#RUN ["/bin/bash", "-c", "source activate ipykernel_py2 && conda install --yes -v anaconda"]
 
 # Preparing Nansat install
 # https://github.com/nansencenter/nansat
 ENV GDAL_DATA $CONDA_DIR/share/gdal/
 ENV GEOS_DIR $CONDA_DIR
 
-RUN conda install -n ipykernel_py2 -q --yes -c conda-forge nose pillow \
-    basemap netcdf4 gdal geopy folium rasterio ipyleaflet bqplot cmocean \
-    cartopy iris shapely pyproj
+RUN conda install -n ipykernel_py2 -q --yes  -c conda-forge numpy pandas \
+    matplotlib nose pillow basemap netcdf4 gdal pyproj geopy rasterio \
+    cmocean cartopy iris shapely yaml
 
 RUN conda install -n ipykernel_py2 -y bcrypt passlib
 
