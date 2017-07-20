@@ -20,8 +20,8 @@ RUN ["/bin/bash", "-c", "source activate ipykernel_py2 && python -m ipykernel in
 
 # Preparing Nansat install
 # https://github.com/nansencenter/nansat
-ENV GDAL_DATA $HOME/conda/share/gdal/
-ENV GEOS_DIR $HOME/conda/
+ENV GDAL_DATA $CONDA_DIR/share/gdal/
+ENV GEOS_DIR $CONDA_DIR
 
 RUN conda install -n ipykernel_py2 -q --yes -c conda-forge nose pillow \
     basemap netcdf4 gdal geopy folium rasterio ipyleaflet bqplot cmocean \
@@ -31,6 +31,10 @@ RUN conda install -n ipykernel_py2 -y bcrypt passlib
 
 RUN ["/bin/bash", "-c", "source activate ipykernel_py2 && pip install pyorient"]
 RUN ["/bin/bash", "-c", "source activate ipykernel_py2 && pip install https://github.com/nansencenter/nansat/archive/master.tar.gz"]
+
+# Make sure the user have access to the  .local subfolder
+USER root
+RUN chown -R $NB_USER:users $HOME/.local
 
 # Ensure that container starts with the Notebook_user
 USER $NB_USER
