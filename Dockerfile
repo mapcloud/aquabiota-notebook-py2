@@ -25,7 +25,7 @@ ENV GEOS_DIR $HOME/conda/
 
 RUN conda install -n ipykernel_py2 -q --yes -c conda-forge nose pillow \
     basemap netcdf4 gdal geopy folium rasterio ipyleaflet bqplot cmocean \
-    cartopy iris shapely
+    cartopy iris shapely pyproj
 
 RUN conda install -n ipykernel_py2 -y bcrypt passlib
 
